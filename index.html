@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Sueldo Neto - España</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Sueldo Neto</h1>
+            <p class="subtitle">Calcula tu salario neto mensual en España</p>
+        </header>
+
+        <form id="salary-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="salario-bruto">Salario bruto anual (&euro;)</label>
+                    <input type="number" id="salario-bruto" min="0" step="100" placeholder="30000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="num-pagas">N&uacute;mero de pagas</label>
+                    <select id="num-pagas">
+                        <option value="12">12 pagas</option>
+                        <option value="14" selected>14 pagas</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comunidad">Comunidad Aut&oacute;noma</label>
+                    <select id="comunidad">
+                        <option value="andalucia">Andaluc&iacute;a</option>
+                        <option value="aragon">Arag&oacute;n</option>
+                        <option value="asturias">Asturias</option>
+                        <option value="baleares">Islas Baleares</option>
+                        <option value="canarias">Canarias</option>
+                        <option value="cantabria">Cantabria</option>
+                        <option value="castilla_leon">Castilla y Le&oacute;n</option>
+                        <option value="castilla_mancha">Castilla-La Mancha</option>
+                        <option value="cataluna">Catalu&ntilde;a</option>
+                        <option value="extremadura">Extremadura</option>
+                        <option value="galicia">Galicia</option>
+                        <option value="madrid" selected>Madrid</option>
+                        <option value="murcia">Murcia</option>
+                        <option value="navarra">Navarra</option>
+                        <option value="pais_vasco">Pa&iacute;s Vasco</option>
+                        <option value="rioja">La Rioja</option>
+                        <option value="valencia">Comunidad Valenciana</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="situacion">Situaci&oacute;n personal</label>
+                    <select id="situacion">
+                        <option value="soltero">Soltero/a sin hijos</option>
+                        <option value="casado_ambos">Casado/a - ambos trabajan</option>
+                        <option value="casado_uno">Casado/a - un solo ingreso</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="hijos">N&uacute;mero de hijos</label>
+                    <select id="hijos">
+                        <option value="0">Sin hijos</option>
+                        <option value="1">1 hijo</option>
+                        <option value="2">2 hijos</option>
+                        <option value="3">3 hijos</option>
+                        <option value="4">4 o m&aacute;s hijos</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="edad">Edad</label>
+                    <select id="edad">
+                        <option value="menor30">Menor de 30 a&ntilde;os</option>
+                        <option value="30a65" selected>Entre 30 y 65 a&ntilde;os</option>
+                        <option value="mayor65">Mayor de 65 a&ntilde;os</option>
+                        <option value="mayor75">Mayor de 75 a&ntilde;os</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="discapacidad">Discapacidad</label>
+                    <select id="discapacidad">
+                        <option value="0">Sin discapacidad</option>
+                        <option value="33">Entre 33% y 65%</option>
+                        <option value="65">65% o superior</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrato">Tipo de contrato</label>
+                    <select id="contrato">
+                        <option value="general">General</option>
+                        <option value="temporal">Temporal</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" id="calcular-btn">Calcular Sueldo Neto</button>
+        </form>
+
+        <div id="resultados" class="resultados hidden">
+            <h2>Resultados</h2>
+
+            <div class="resultado-principal">
+                <div class="neto-mensual">
+                    <span class="label">Sueldo neto mensual</span>
+                    <span class="valor" id="neto-mensual">0,00 &euro;</span>
+                </div>
+                <div class="neto-anual">
+                    <span class="label">Sueldo neto anual</span>
+                    <span class="valor" id="neto-anual">0,00 &euro;</span>
+                </div>
+            </div>
+
+            <div class="desglose">
+                <h3>Desglose anual</h3>
+                <table>
+                    <tbody>
+                        <tr class="bruto">
+                            <td>Salario bruto anual</td>
+                            <td id="res-bruto" class="valor-tabla">0,00 &euro;</td>
+                        </tr>
+                        <tr class="seccion-header">
+                            <td colspan="2">Cotizaciones a la Seguridad Social</td>
+                        </tr>
+                        <tr>
+                            <td>Contingencias comunes (4,70%)</td>
+                            <td id="res-cc" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr>
+                            <td>Desempleo (<span id="res-desempleo-pct">1,55</span>%)</td>
+                            <td id="res-desempleo" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr>
+                            <td>Formaci&oacute;n profesional (0,10%)</td>
+                            <td id="res-fp" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr>
+                            <td>MEI (0,13%)</td>
+                            <td id="res-mei" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr class="subtotal">
+                            <td>Total Seguridad Social</td>
+                            <td id="res-ss-total" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr class="seccion-header">
+                            <td colspan="2">IRPF</td>
+                        </tr>
+                        <tr>
+                            <td>Base liquidable</td>
+                            <td id="res-base-liquidable" class="valor-tabla">0,00 &euro;</td>
+                        </tr>
+                        <tr>
+                            <td>Cuota estatal</td>
+                            <td id="res-cuota-estatal" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr>
+                            <td>Cuota auton&oacute;mica</td>
+                            <td id="res-cuota-autonomica" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr class="subtotal">
+                            <td>Total IRPF</td>
+                            <td id="res-irpf-total" class="valor-tabla deduccion">0,00 &euro;</td>
+                        </tr>
+                        <tr>
+                            <td>Tipo efectivo IRPF</td>
+                            <td id="res-tipo-efectivo" class="valor-tabla">0,00%</td>
+                        </tr>
+                        <tr class="total">
+                            <td>Sueldo neto anual</td>
+                            <td id="res-neto" class="valor-tabla">0,00 &euro;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="grafico-container">
+                <h3>Distribuci&oacute;n del salario</h3>
+                <div class="barra-distribucion">
+                    <div class="barra-neto" id="barra-neto">
+                        <span>Neto</span>
+                    </div>
+                    <div class="barra-irpf" id="barra-irpf">
+                        <span>IRPF</span>
+                    </div>
+                    <div class="barra-ss" id="barra-ss">
+                        <span>SS</span>
+                    </div>
+                </div>
+                <div class="leyenda">
+                    <div class="leyenda-item"><span class="dot neto"></span> Neto: <span id="pct-neto">0%</span></div>
+                    <div class="leyenda-item"><span class="dot irpf"></span> IRPF: <span id="pct-irpf">0%</span></div>
+                    <div class="leyenda-item"><span class="dot ss"></span> Seguridad Social: <span id="pct-ss">0%</span></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Los c&aacute;lculos son orientativos y se basan en la normativa fiscal vigente para 2025.
+            Consulta con un asesor fiscal para obtener datos exactos.</p>
+        </footer>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
